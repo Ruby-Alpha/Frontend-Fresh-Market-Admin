@@ -1,6 +1,14 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { DashboardProductAddPage } from './pages/DashboardProductAddPage';
+import { ProductsAddPage } from './pages/ProductsAddPage';
+import { OrdersAddPage } from './pages/OrdersAddPage';
+import { DashboardOrderAddPage } from './pages/DashboardOrderAddPage';
 
 const router = createBrowserRouter([
+  {path: "/", element: <DashboardProductAddPage/>},
+  {path: "/order", element: <DashboardOrderAddPage/>},
+  {path: "/product/add", element: <ProductsAddPage/>},
+  {path: "/order/add", element: <OrdersAddPage/>},
 
 ])
 
