@@ -3,7 +3,53 @@ import { Link } from 'react-router-dom'
 
 export const OrderPage = () => {
 
+    // const [productName, setProductName] = useState(null);
+    // const [description, setDescription] = useState(null);
+    // const [price, setPrice] = useState(null);
+    // const [quantityInStock, setQuantityInStock] = useState(null);
+    // const [itemWeight, setItemWeight] = useState(null);
+    // const [category, setCategory] = useState(null);
+  
+    // const [image, setImage] = useState();
+  
+    // const navigate = useNavigate();
+  
 
+  
+    const onSubmitHandler = async (e) => {
+    //   e.preventDefault();
+  
+    //   const newProject = {
+    //     productName: productName,
+    //     description: description,
+    //    price:price,
+    //     quantityInStock: quantityInStock,
+    //     itemWeight: itemWeight,
+    //    category:category,
+    //     image: image,
+    //   };
+  
+      try {
+        const response = await fetch(
+          `${process.env.BACKEND_URI}/products`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            body: JSON.stringify(),
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+  
+        // navigate("/dashboard/products");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
 
 // const addOrders = async
 
@@ -16,7 +62,7 @@ export const OrderPage = () => {
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
             <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                 <div class="w-full md:w-1/2">
-                    <form class="flex items-center">
+                    <form  class="flex items-center">
                         <label for="simple-search" class="sr-only">Search</label>
                         <div class="relative w-full">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -124,13 +170,13 @@ export const OrderPage = () => {
                 </table>
             </div>
             <nav class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4" aria-label="Table navigation">
-                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                {/* <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
                     Showing
                     <span class="font-semibold text-gray-900 dark:text-white">1-10</span>
                     of
                     <span class="font-semibold text-gray-900 dark:text-white">1000</span>
-                </span>
-                <ul class="inline-flex items-stretch -space-x-px">
+                </span> */}
+                {/* <ul class="inline-flex items-stretch -space-x-px">
                     <li>
                         <a href="#" class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                             <span class="sr-only">Previous</span>
@@ -162,7 +208,7 @@ export const OrderPage = () => {
                             </svg>
                         </a>
                     </li>
-                </ul>
+                </ul> */}
             </nav>
         </div>
     </div>

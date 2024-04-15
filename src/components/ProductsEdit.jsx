@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-export const ProductsAdd = () => {
-
+export const ProductsEdit = () => {
+  
+    
     const [productName, setProductName] = useState(null);
     const [description, setDescription] = useState(null);
     const [price, setPrice] = useState(null);
     const [quantityInStock, setQuantityInStock] = useState(null);
+    const [itemWeight, setItemWeight] = useState(null);
     const [category, setCategory] = useState(null);
   
     const [image, setImage] = useState();
@@ -18,31 +20,32 @@ export const ProductsAdd = () => {
     const onSubmitHandler = async (e) => {
       e.preventDefault();
   
-      const newProduct = {
+      const newProject = {
         productName: productName,
         description: description,
        price:price,
         quantityInStock: quantityInStock,
+        itemWeight: itemWeight,
        category:category,
         image: image,
       };
   
       try {
         const response = await fetch(
-          `${process.env.BACKEND_URI}/product`,
+          `${process.env.BACKEND_URI}/products`,
           {
-            method: "POST",
+            method: "PATCH",
             headers: {
               "Content-Type": "application/json",
             },
-            // Authorization: `Bearer ${localStorage.getItem("token")}`,
-            body: JSON.stringify(newProduct),
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            body: JSON.stringify(newProject),
           }
         );
         const data = await response.json();
         console.log(data);
   
-        navigate("/");
+        navigate("/dashboard/products");
       } catch (error) {
         console.log(error);
       }
@@ -50,7 +53,6 @@ export const ProductsAdd = () => {
   
 
   return (
-   <div>
     <section class="bg-gray-300 dark:bg-gray-900">
   <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
       <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new product</h2>
@@ -63,7 +65,7 @@ export const ProductsAdd = () => {
                   />
               </div>
               <div class="w-full">
-                  <label for="setQuantityInStock" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity in stock</label>
+                  <label for="brand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity in stock</label>
                   <input type="text" name="brand" id="brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Product brand" required=""
                   onChange={(e) => setQuantityInStock(e.target.value)}
                   />
@@ -86,7 +88,12 @@ export const ProductsAdd = () => {
 
                   </select>
               </div>
-              
+              <div>
+                  <label for="item-weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item Weight (kg)</label>
+                  <input type="number" name="item-weight" id="item-weight" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="12" required=""
+                  onChange={(e) => setItemWeight(e.target.value)}
+                  />
+              </div> 
               <div class="sm:col-span-2">
                   <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
                   <textarea id="description" rows="8" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Your description here"
@@ -104,11 +111,11 @@ export const ProductsAdd = () => {
 
           </div>
           <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-black bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-              Add product
+              Update product
           </button>
       </form>
   </div>
 </section>
-   </div>
+ 
   )
 }
