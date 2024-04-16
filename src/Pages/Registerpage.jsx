@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
 export default function RegisterPage() {
     const [firstname, setFirstName] = useState(null);
     const [Lastname, setLastName] = useState(null);
@@ -17,6 +18,7 @@ export default function RegisterPage() {
       e.preventDefault();
   
       const userCredentials = { firstName: firstname, lastName:Lastname, email: email, password: password };
+      console.log({userCredentials});
   
       try {
         const response = await fetch(`http://localhost:5000/api/users/login`, {
