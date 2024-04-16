@@ -42,7 +42,7 @@ export const ProductsAdd = () => {
         const data = await response.json();
         console.log(data);
   
-        navigate("/");
+        navigate("/product");
       } catch (error) {
         console.log(error);
       }

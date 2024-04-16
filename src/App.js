@@ -7,7 +7,7 @@ import { ProductsEditPage } from './pages/ProductsEditPage';
 import { OrdersEditPage } from './pages/OrdersEditPage';
 
 const router = createBrowserRouter([
-  {path: "/", element: <DashboardProductAddPage/>},
+  {path: "/product", element: <DashboardProductAddPage/>},
   {path: "/order", element: <DashboardOrderAddPage/>},
   {path: "/product/add", element: <ProductsAddPage/>},
   {path: "/product/edit", element: <ProductsEditPage/>},
