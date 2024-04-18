@@ -1,104 +1,134 @@
-import React from 'react';
-import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Formik } from "formik";
+import React from "react";
+import * as Yup from "yup";
+import "../App.css";
 
 
 
+const schema = Yup.object().shape({
+  firstName: Yup.string()
+    .required("firstName is a required field"),
+  lastName: Yup.string()
+    .required("lastName is a required field"),
+  email: Yup.string()
+    .required("Email is a required field"),
+  password: Yup.string()
+    .required("Password is a required field")
+    .min(8, "Password must be at least 8 characters"),
+});
 
-export default function RegisterPage() {
-    const [firstname, setFirstName] = useState(null);
-    const [Lastname, setLastName] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
-
-    const navigate = useNavigate();
-
-
-    const onSubmitHandler = async (e) => {
-      e.preventDefault();
-  
-      const userCredentials = { firstName: firstname, lastName:Lastname, email: email, password: password };
-      console.log({userCredentials});
-  
-      try {
-        const response = await fetch(`http://localhost:5000/api/users/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userCredentials),
-        });
-  
-        const data = await response.json();
-        console.log(data);
-       
-        localStorage.setItem("token", data.token);
-  
-        navigate("/dashboard");
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-
+export default function Registerpage() {
+  const handleSubmit = async (values) => {
+    console.log(values);
+    const response = await fetch("http://localhost:4000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
   return (
-    <div  class="bg-gray-100 flex h-screen items-center justify-center px-4 sm:px-6 lg:px-8">
-    <div class="w-full max-w-md space-y-8">
-        <div class="bg-white shadow-md rounded-md p-6">
+    <>
+      {/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
+      <Formik
+        validationSchema={schema}
+        initialValues={{ firstName: "", lastName: "", email: "", password: "" }}
+        onSubmit={handleSubmit}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        }) => (
+          <div className="login">
+            <div className="form">
+              {/* Passing handleSubmit parameter tohtml form onSubmit property */}
+              <form noValidate onSubmit={handleSubmit}>
+                <span>Register Here</span>
+                {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
+                <input
+                  type="firstName"
+                  name="firstName"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.firstName}
+                  placeholder="Enter firsname id / username"
+                  className="form-control inp_text"
+                  id="firstName"
+                />
+                {/* If validation is not passed show errors */}
+                <p className="error">
+                  {errors.firstName && touched.firstName && errors.firstName}
+                </p>
+                <input
+                  type="lastName"
+                  name="lastName"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.lastName}
+                  placeholder="Enter lastname"
+                  className="form-control inp_text"
+                  id="lastName"
+                />
+                {/* If validation is not passed show errors */}
+                <p className="error">
+                  {errors.lastName && touched.lastName && errors.lastName}
+                </p>
+                <input
+                  type="email"
+                  name="email"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                  placeholder="Enter email"
+                  className="form-control inp_text"
+                  id="email"
+                />
+                {/* If validation is not passed show errors */}
+                <p className="error">
+                  {errors.email && touched.email && errors.email}
+                </p>
 
-            <img class="mx-auto h-12 w-auto" src="https://www.svgrepo.com/show/499664/user-happy.svg" alt="" />
-
-            <h2 class="my-3 text-center text-3xl font-bold tracking-tight text-gray-900">
-                Sign up for an account
-            </h2>
-
-            <form onSubmit={onSubmitHandler} class="space-y-6" method="POST">
-
-                <div>
-                    <label for="new-password" class="block text-sm font-medium text-gray-700">Firstname</label>
-                    <div class="mt-1">
-                        <input name="username" type="firstname" required
-                            class="px-2 py-3 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
-                            onChange={(e) => setFirstName(e.target.value)} />
-                    </div>
-                </div>
-
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700">Lastname </label>
-                    <div class="mt-1">
-                        <input name="email" type="Lastname" autocomplete="Lastname" required
-                            class="px-2 py-3 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm" 
-                            onChange={(e) => setLastName(e.target.value)} />
-                    </div>
-                </div>
-
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700">Email</label>
-                    <div class="mt-1">
-                        <input name="password" type="Email" autocomplete="Email" required
-                            class="px-2 py-3 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm" 
-                            onChange={(e) => setEmail(e.target.value)} />
-                    </div>
-                </div>
-
-                <div>
-                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <div class="mt-1">
-                        <input name="confirm_password" type="password" autocomplete="confirm-password" required
-                            class="px-2 py-3 mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm" 
-                            onChange={(e) => setPassword(e.target.value)} />
-                    </div>
-                </div>
-
-                <div>
-                    <button onSubmit={onSubmitHandler} type="submit"
-                        class="flex w-full justify-center rounded-md border border-transparent bg-green-900 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-opacity-75 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-offset-2">Register
-                        Account
-                        </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-  )
+                {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
+                <input
+                  type="password"
+                  name="password"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  placeholder="Enter password"
+                  className="form-control"
+                />
+                {/* If validation is not passed show errors */}
+                <p className="error">
+                  {errors.password && touched.password && errors.password}
+                </p>
+                <input
+                  type="confrim password"
+                  name="password"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                  placeholder="confirm  password"
+                  className="form-control"
+                />
+                {/* If validation is not passed show errors */}
+                <p className="error">
+                  {errors.password && touched.password && errors.password}
+                </p>
+                {/* Click on submit button to submit the form */}
+                <button type="submit">Register</button>
+              </form>
+            </div>
+          </div>
+        )}
+      </Formik>
+    </>
+  );
 }

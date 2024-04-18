@@ -1,75 +1,103 @@
+import { Formik } from 'formik';
 import React from 'react'
-import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import * as Yup from 'yup'
+import '../App.css' 
 
 
-export default function UserLogin() {
-    const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-
-  const navigate = useNavigate();
 
 
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
 
-    const userCredentials = { email: email, password: password };
+const schema = Yup.object({
+  email: Yup.string()
+    .required("Email is a required field"),
+  
+  password: Yup.string()
+    .required("Password is a required field")
+    .min(8, "Password must be at least 8 characters"),
+});
 
-    try {
-      const response = await fetch(`http://localhost:5000/api/users/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userCredentials),
-      });
+export default function userLogin() {
 
-      const data = await response.json();
-      console.log(data);
-     
-      localStorage.setItem("token", data.token);
+  const handleSubmit = async (e) => {
+  
+    const response = await fetch('http://localhost:4000/users/login', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(e),
+    });
+    const data = await response.json();
+    console.log(data);
+  }
 
-      navigate("/dashboard");
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  return (
-    <section class="py-26 bg-white">
-    <div class="container px-4 mx-auto">
-      <div class="max-w-lg mx-auto">
-        <div class="text-center mb-8">
-          <a class="inline-block mx-auto mb-6" href="#">
-            <img src="nigodo-assets/logo-icon-nigodo.svg" alt=""/>
-          </a>
-          <h2 class="text-3xl md:text-4xl font-bold mb-2">Log in</h2>
+
+
+    return (
+      <>
+        {/* Wrapping form inside formik tag and passing our schema to validationSchema prop */}
+        <Formik
+          validationSchema={schema}
+          initialValues={{ email: "", password: "" }}
+          onSubmit={handleSubmit}
+            // (values) => {
+            // console.log('Form data', values)
+            // // Alert the input values of the form that we filled
+            // alert(JSON.stringify(values));
+          // }
+    // }
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+          }) => (
+            <div className="login">
+              <div className="form">
+             {/* Passing handleSubmit parameter tohtml form onSubmit property */}
+                <form noValidate onSubmit={handleSubmit}>
+                  <span>Login</span>
+                {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
+                  <input
+                    type="email"
+                    name="email"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.email}
+                    placeholder="Enter email id / username"
+                    className="form-control inp_text"
+                    id="email"
+                  />
+                  {/* If validation is not passed show errors */}
+                  <p className="error">
+                    {errors.email && touched.email && errors.email}
+                  </p>
+                   {/* Our input html with passing formik parameters like handleChange, values, handleBlur to input properties */}
+                  <input
+                    type="password"
+                    name="password"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.password}
+                    placeholder="Enter password"
+                    className="form-control"
+                  />
+                   {/* If validation is not passed show errors */}
+                  <p className="error">
+                    {errors.password && touched.password && errors.password}
+                  </p>
+                  {/* Click on submit button to submit the form */}
+                  <button type="submit">Login</button>
+                </form>
+              </div>
             </div>
-        <form onSubmit={onSubmitHandler} action="">
-          <div class="mb-6">
-            <label class="block mb-2 font-bolder" for="">Email</label>
-            <input class="inline-block w-full p-4 leading-6 text-lg font-bold placeholder-indigo-900 bg-white shadow border-2 border-green-900 rounded" type="email" placeholder=""
-             onChange={(e) => setEmail(e.target.value)}/>
-          </div>
-          <div class="mb-6">
-            <label class="block mb-2 font-bolder" for="">Password</label>
-            <input class="inline-block w-full p-4 leading-6 text-lg font-bold placeholder-indigo-900 bg-white shadow border-2 border-green-900 rounded" type="password" placeholder=""
-            onChange={(e) => setPassword(e.target.value)}/>
-          </div>
-          <div class="flex flex-wrap -mx-4 mb-6 items-center justify-between">
-            <div class="w-full lg:w-auto px-4 mb-4 lg:mb-0">
-              <label for="">
-                <input type="checkbox"/>
-                <span class="ml-1 font-bold">Remember me</span>
-              </label>
-            </div>
-            <div class="w-full lg:w-auto px-4"><a class="inline-block font-bold hover:underline" href="#">Forgot your password?</a></div>
-          </div>
-          <button class="inline-block w-full py-4 px-6 mb-6 text-center text-lg leading-6 text-white font-extrabold bg-green-800 hover:bg-yellow-900 border-3 border-indigo-900 shadow rounded transition duration-200">Log in</button>
-          <p class="text-center font-extrabold">Don&rsquo;t have an account? <a class="text-red-500 hover:underline" href="/register">Sign up</a></p>
-        </form>
-      </div>
-    </div>
-    </section>
+          )}
+        </Formik>
+      </>
+  
   )
 }
