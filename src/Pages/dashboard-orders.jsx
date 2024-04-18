@@ -4,9 +4,11 @@ import { BsCart3 } from "react-icons/bs";
 import { FaBasketShopping } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
-import DashboardContent from "./dashboardContent";
+import { OrderPage } from "../components/OrderPage";
+import { Link } from "react-router-dom";
 
-export default function Dashboard() {
+
+export default function DashboardOrders() {
   return (
     <>
     <div className="fixed left-0 top-0 w-64 h-full bg-gray-900 p-4">
@@ -16,32 +18,32 @@ export default function Dashboard() {
       </a>
       <ul className="mt-4">
           <li className="mb-2">
-              <a href="#" className="flex items-center py-2 px-6 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+              <Link to="/dashboard" className="flex items-center py-2 px-6 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
                 <MdDashboard className="mr-3 text-lg " />
                 <span className="text-sm  font-bold">DASHBOARD</span>
-              </a>
+              </Link>
           </li>
           <li className="mb-2">
-              <a href="#" className="flex items-center py-2 px-6 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+              <Link to="/orders" className="flex items-center py-2 px-6 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
                 <BsCart3 className="mr-3 text-lg " />
                 <span className="text-sm  font-bold">ORDERS</span>
-              </a>
+              </Link>
           </li>
           <li className="mb-2">
-              <a href="#" className="flex items-center py-2 px-6 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+              <Link to="/products" className="flex items-center py-2 px-6 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
                 <FaBasketShopping className="mr-3 text-lg " />
                 <span className="text-sm  font-bold">PRODUCTS</span>
-              </a>
+              </Link>
           </li>
           <li className="mb-2">
-              <a href="#" className="flex items-center py-2 px-6 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
+              <Link to="/users" className="flex items-center py-2 px-6 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md">
                 <FaUser className="mr-3 text-lg " />
                 <span className="text-sm  font-bold">USERS</span>
-              </a>
+              </Link>
           </li>
       </ul>
     </div>
-    <DashboardContent />
+    <OrderPage />
     </>
   );
 }

@@ -44,7 +44,9 @@ export const OrderPage = () => {
         </div>
       ) : (
         <div>
-          <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+          <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 md:ml-64 min-h-screen">
+          <h3 class="text-gray-700 text-3xl ml-6 mt-4 mb-4 font-medium">Orders</h3>
+
             <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
               {/* Start coding here  */}
               <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
