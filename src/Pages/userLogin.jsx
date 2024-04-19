@@ -2,6 +2,7 @@ import { Formik } from 'formik';
 import React from 'react'
 import * as Yup from 'yup'
 import '../App.css' 
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -17,7 +18,7 @@ const schema = Yup.object({
 });
 
 export default function userLogin() {
-
+const navigate = useNavigate();
   const handleSubmit = async (e) => {
   
     const response = await fetch('http://localhost:4000/users/login', {
@@ -29,6 +30,22 @@ export default function userLogin() {
     });
     const data = await response.json();
     console.log(data);
+ const token = data.accessToken;
+ console.log(token);
+ sessionStorage.setItem('token',token);
+ sessionStorage.setItem('user', JSON.stringify(data));
+
+ if (token){
+  navigate("/dashboard");
+ }
+ else{
+  console.log (error);
+
+ }
+
+
+
+
   }
 
 
