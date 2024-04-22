@@ -1,23 +1,21 @@
 import { Formik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import * as Yup from "yup";
 import "../App.css";
-
-
+import { useNavigate } from "react-router-dom";
 
 const schema = Yup.object().shape({
-  firstName: Yup.string()
-    .required("firstName is a required field"),
-  lastName: Yup.string()
-    .required("lastName is a required field"),
-  email: Yup.string()
-    .required("Email is a required field"),
+  firstName: Yup.string().required("firstName is a required field"),
+  lastName: Yup.string().required("lastName is a required field"),
+  email: Yup.string().required("Email is a required field"),
   password: Yup.string()
     .required("Password is a required field")
     .min(8, "Password must be at least 8 characters"),
 });
 
 export default function Registerpage() {
+  const navigate = useNavigate();
+
   const handleSubmit = async (values) => {
     console.log(values);
     const response = await fetch("http://localhost:4000/users", {
@@ -29,6 +27,8 @@ export default function Registerpage() {
     });
     const data = await response.json();
     console.log(data);
+
+    navigate("/register");
   };
   return (
     <>
