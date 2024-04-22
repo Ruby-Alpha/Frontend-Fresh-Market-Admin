@@ -11,6 +11,7 @@ import DashboardProducts from './pages/dashboard-products';
 import DashboardOrders from './pages/dashboard-orders';
 import DashboardUsers from './pages/dashboard-users';
 import Registerpage from './pages/Registerpage';
+import AnotherRegisterPage from './pages/AnotherRegisterPage';
 
 const router = createBrowserRouter([
   {path: "/", element: <UserLogin/>},
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
   {path: "/products", element: <DashboardProducts />},
   {path: "/orders", element: <DashboardOrders />},
   {path: "/users", element: <DashboardUsers />},
+  {path: "/AnotherRegisterPage", element: <AnotherRegisterPage />},
 
 ]);
 
