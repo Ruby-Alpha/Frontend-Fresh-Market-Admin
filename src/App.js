@@ -1,16 +1,16 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import UserLogin from './pages/userLogin';
-import RegisterPage from './pages/Registerpage';
-import { ProductsAddPage } from "./pages/ProductsAddPage";
-import { OrdersAddPage } from "./pages/OrdersAddPage";
-import { DashboardOrderAddPage } from "./pages/DashboardOrderAddPage";
-import { ProductsEditPage } from "./pages/ProductsEditPage";
-import { OrdersEditPage } from "./pages/OrdersEditPage";
-import { DashboardProductAddPage } from './pages/DashboardProductAddPage';
-import Dashboard from "./pages/dashboard-sidebar";
-import DashboardProducts from './pages/dashboard-products';
-import DashboardOrders from './pages/dashboard-orders';
-import DashboardUsers from './pages/dashboard-users';
+import UserLogin from './Pages/userLogin';
+import RegisterPage from './Pages/Registerpage';
+import { ProductsAddPage } from "./Pages/ProductsAddPage";
+import { OrdersAddPage } from "./Pages/OrdersAddPage";
+import { DashboardOrderAddPage } from "./Pages/DashboardOrderAddPage";
+import { ProductsEditPage } from "./Pages/ProductsEditPage";
+import { OrdersEditPage } from "./Pages/OrdersEditPage";
+import { DashboardProductAddPage } from './Pages/DashboardProductAddPage';
+import Dashboard from "./Pages/dashboard-sidebar";
+import DashboardProducts from './Pages/dashboard-products';
+import DashboardOrders from './Pages/dashboard-orders';
+import DashboardUsers from './Pages/dashboard-users';
 
 const router = createBrowserRouter([
   {path: "/", element: <UserLogin/>},

@@ -6,6 +6,8 @@ import { FaUser } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { OrderPage } from "../components/OrderPage";
 import { Link } from "react-router-dom";
+import Logout from "../components/Logout";
+
 
 
 export default function DashboardOrders() {
@@ -41,6 +43,17 @@ export default function DashboardOrders() {
                 <span className="text-sm  font-bold">USERS</span>
               </Link>
           </li>
+          <li className="mb-2">
+              <Link
+                to="/"
+                className="flex items-center py-2 px-6 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md"
+              >
+                <FaUser className="mr-3 text-lg " />
+                <span className="text-sm  font-bold">
+                  <Logout />
+                </span>
+              </Link>
+            </li>
       </ul>
     </div>
     <OrderPage />

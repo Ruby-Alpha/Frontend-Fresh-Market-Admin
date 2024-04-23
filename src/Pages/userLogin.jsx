@@ -30,6 +30,7 @@ export default function UserLogin() {
     const data = await response.json();
     console.log(data);
     if (data && data.token) {
+      console.log('checking:', data.token)
       localStorage.setItem("token", data.token);
       navigate("/dashboard");
     }
@@ -42,12 +43,7 @@ export default function UserLogin() {
         validationSchema={schema}
         initialValues={{ email: "", password: "" }}
         onSubmit={handleSubmit}
-        // (values) => {
-        // console.log('Form data', values)
-        // // Alert the input values of the form that we filled
-        // alert(JSON.stringify(values));
-        // }
-        // }
+       
       >
         {({
           values,

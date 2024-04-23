@@ -8,5 +8,5 @@ export default function Logout() {
     localStorage.removeItem("token");
     navigate("/");
   };
-  return <button onClick={removeToken}>Logout</button>;
+  return <button onClick={removeToken}>LOGOUT</button>;
 }
